@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Profile Page {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="container my-3 mx-3">
+            <div class="card" style="width: 19.99rem;">
+                {% if page_user.profile_image %}
+                <img src="{{page_user.profile_image.url}}"><br>
+                {% else %}
+                <img src="{% static 'images/default_profile.jpg' %}"><br>
+                {% endif %}
+                <ul class="list-group list-group-flush">
+                    <li style="color: #fff; background-color:tomato; border-radius:5px" class="list-group-item">
+                        <span><b>{{user.first_name}} {{user.last_name}}</b></span>
+                    </li>
+                    <li class="list-group-item"><b>Company Name: </b><span
+                            style="color: blue;">{{page_user.company_name}}</span></li>
+                    <li class="list-group-item"><b>Contact Number: </b><span
+                            style="color: blue;">{{page_user.phone_number}}</span></li>
+                    <li class="list-group-item"><b>Email: </b><span style="color: blue;">{{user.email}}</span></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div  class="col-md-4">
+        <div class="conatiner my-3 mx-3">
+
+            <img src="{% static 'images/ChatGPT.jpg' %}" id="scroll_img"><br><br>
+            <button id="btn">Click</button>
+
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

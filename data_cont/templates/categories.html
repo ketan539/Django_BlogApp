@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{post.title}} {% endblock %}
+{% block content %}
+
+{% if category_post %}
+{% if user.is_authenticated %}
+<div class="container my-3 mx-3">
+    <h2 style="color: rgb(4, 84, 148);">{{cats}}</h2>
+    <div class="row">
+        {% for post in category_post %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                {% if post.header_image %}
+                <img src= "{{post.header_image.url}}">
+                {% else %}
+                <img src="{% static 'images/No-Photo-Available.png' %}"
+                    class="card-img-top" alt="...">
+                {% endif %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{post.category}}</span>
+                <div class="card-body">
+                    <h5 class="card-title text-muted">{{post.title}}</h5>
+                    <p class="card-text">By: {{post.author}}<br>
+                        {% if post.body|length > 200 %}
+                        {{post.body | slice:"200" | safe}}...
+                    </p>
+                    {% else %}
+                    {{post.body | slice:"200" | safe}}</p>
+                    {% endif %}</p>
+                    <small class="text-muted"> Posted on: {{post.post_date}}</small><br><br>
+                    {% if user.id == post.author.id %}
+                    <a href="{% url 'update_post' post.pk  %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'delete' post.pk  %}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                    <small class="text-muted">Login for more options</small><br>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+{% else %}
+<h1>Sorry This Page Does not exist.</h1>
+{% endif %}
+{% endblock %}

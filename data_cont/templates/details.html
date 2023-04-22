@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{post.title}} {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container my-3 mx-3">
+
+    <div class="card" style="width: 450px;">
+        <ul class="list-group">
+            <li class="list-group-item" style="background-color: rgb(7, 7, 7);
+            color:#fff" aria-current="true"><b>{{post.author}}</b></li>
+        </ul>
+        {% if post.header_image %}
+        <img src="{{post.header_image.url}}">
+        {% else %}
+        <img src="{% static 'images/No-Photo-Available.png' %}" class="card-img-top" alt="...">
+        {% endif %}
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            style="z-index: 10;">
+            {{post.category}}</span>
+
+        <div class="card-body">
+            <h5 class="card-title text-muted">{{post.title}}</h5>
+            <h6 class="card-text">{{post.body|safe}}</h6>
+            <small class="text-muted"> Posted on: {{post.post_date}}</small><br><br>
+            {% if user.id == post.author.id %}
+            <form method="post" action="{% url 'like_post' post.pk %}">
+                {% csrf_token %}
+                <div class="row">
+                    {% if liked %}
+                    <div class="col-sm-2 align-self-start">
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="button_unlike"></button>
+                    </div>
+                    {% else %}
+                    <div class="col-sm-2 align-self-start">
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="button"></button>
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-2 align-self-start">
+                        <a href="{% url 'update_post' post.pk  %}"><img src="{% static 'images/edit.png' %}"></a>
+                    </div>
+                    <div class="col-sm-2 align-self-start">
+                        <a href="{% url 'delete' post.pk  %}"><img src="{% static 'images/delete.png' %}"></a><br>
+                    </div>
+                </div>
+            </form>
+            {{total_likes}} likes
+            {% else %}
+            <form method="post" action="{% url 'like_post' post.pk %}">
+                {% csrf_token %}
+                {% if liked %}
+                <div class="col-sm-2 align-self-start">
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="button_unlike"></button>
+                </div>
+                {% else %}
+                <div class="col-sm-2 align-self-start">
+                    <button type="submit" name="post_id" value="{{ post.id }}" class="button"></button>
+                </div>
+                {% endif %}
+            </form>
+            {{total_likes}} likes<br><br>
+            <small class="text-muted">Login as Author ({{post.author}}) more options.</small><br>
+            {% endif %}
+            <br>
+            <hr>
+            <h5 class="card-title">Comments    <button class="btn btn-light"><a class="edit_anchor_3" href="{% url 'add_comment' post.pk %}">Add Comment</a></button></h5>
+         
+
+           
+            <div class="row">
+           
+                {{form.as_p}}
+             
+                {% for comment in post.comments.all %}
+                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
+                    class="scrollspy-example" tabindex="0">
+                    <span><b>{{comment.name}}</b></span><br>
+                    <span id="list-item-1">{{comment.body}}</span><br>
+                    <small class="text-muted">{{comment.comment_date}}</small>
+                    <hr>
+                    {% endfor %}
+                    <!-- </div> -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- {% for comment in post.comments.all %}
+    <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+            {{comment.name}}
+        </button>
+        <button type="button" class="list-group-item list-group-item-action"> {{comment.name}}</button>
+        <button type="button" class="list-group-item list-group-item-action"> {{comment.comment_date}}</button>
+        <button type="button" class="list-group-item list-group-item-action"> {{comment.body}}</button>
+        <button type="button" class="list-group-item list-group-item-action" disabled> {{comment.comment_date}}</button>
+      </div>
+      {% endfor %} -->
+
+
+
+    <!-- <div>
+    {% if user.id == post.author.id %}
+    {% if post.author.profile.id %}
+    <a href="{% url 'show_profile' post.author.profile.id  %}">Link</a><br>
+    {% endif %}
+    {% endif %}
+</div> -->
+
+    {% else %}
+
+    <h2>You are not Allowed here.</h2>
+
+
+    {% endif %}
+
+    {% endblock %}

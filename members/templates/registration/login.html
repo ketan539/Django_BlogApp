@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Login Page {% endblock %}
+{% block content %}
+
+<div class="container my-3 mx-3">
+    <div class="login_form">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Username:</label>
+                <input type="text" name="username" placeholder="Enter your username"
+                    class="form-control">
+             
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password"
+                    class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary"><img src="{% static 'images/login.png' %}"> Login</button>
+    </div>
+    </form>
+</div>
+</div>
+
+
+
+{% endblock %}

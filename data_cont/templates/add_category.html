@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add Category Page {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container my-3 mx-3">
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            {{form.as_p}}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add Category">
+    </form><br>
+    {% if user.id == 1 %}
+    it works
+    {% else %}
+    No permission
+    {% endif %}
+
+</div>
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+{% endblock %}

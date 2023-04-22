@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Profile Page {% endblock %}
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<div class="conatiner my-3 mx-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{form.as_p}}
+         </div>
+        <button type="submit" class="btn btn-primary"><img src="{% static 'images/add.png' %}"> Submit</button>
+    </form>
+</div>
+
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+
+
+{% endblock %}

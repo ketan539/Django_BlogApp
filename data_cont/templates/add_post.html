@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add Post Page {% endblock %}
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<div class="conatiner my-3 mx-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{form.as_p}}
+            {{form.media}}
+        <button type="submit" class="btn btn-primary"><img src="{% static 'images/add.png' %}"> Add</button>
+    </form>
+</div>
+<script>
+    var name = "{{user.id}}";
+    document.getElementById('jsid').value = name;
+
+</script>
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+
+
+{% endblock %}

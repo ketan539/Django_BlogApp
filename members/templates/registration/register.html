@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Register Page {% endblock %}
+{% block content %}
+
+<div class="container my-3 mx-3">
+    <div class="login_form_2">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{form.as_p}}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Register">
+    </form>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Profile Page {% endblock %}
+{% block content %}
+
+
+{% if user.is_authenticated %}
+{% if user.id == profile.user.id %}
+<div class="conatiner my-3 mx-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{form.as_p}}
+        </div>
+        <!-- <div class="mb-3">
+            <label  class="form-label">Contact Number</label>
+            <input type="text" pattern="[6789][0-9]{9}" title="Please enter valid phone number" placeholder="Enter your contact number" name="phone_number" class="form-control">
+        </div> -->
+        <button type="submit" class="btn btn-secondary"><img src="{% static 'images/captcha.png' %}"> Update </button>
+    </form>
+</div>
+{% else %}
+Login as a correct User.
+{% endif %}
+
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+
+
+{% endblock %}

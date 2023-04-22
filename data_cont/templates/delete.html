@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{post.title}} {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container my-3 mx-3">
+<h2  style="color: tomato;">Delete the Post.</h2>
+    <div class="card" style="width: 18rem;">
+        <img src="{% static 'images/wallpapersden.com_spider-man-minimal-cool-art-hd_2560x1440.jpg' %}" class="card-img-top" alt="...">
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{post.category}}</span>
+        <div class="card-body">
+            <h5 class="card-title text-muted">{{post.title}}</h5>
+            <p class="card-text">By: {{post.author}}<br>
+                {{post.body| safe}}</p>
+                <small class="text-muted"> Posted on: {{post.post_date}}</small><br>
+            <form method="post">
+                {% csrf_token %}
+                <input type="submit" onclick="return confirm('Do you want to Delete the Record?')" value="Delete"
+                    class="btn btn-danger">
+            </form>
+        </div>
+    </div>
+
+</div>
+{% else %}
+
+You are not allowed here.
+
+{% endif %}
+
+{% endblock %}

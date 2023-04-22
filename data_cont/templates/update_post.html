@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Update Post Page {% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container my-3 mx-3">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{form.media}}
+            {{form.as_p}}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+</div>
+{% else %}
+
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Message from the website</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        You are not allowed here.
+    </div>
+</div>
+
+
+{% endif %}
+
+
+
+
+{% endblock %}
